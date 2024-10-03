@@ -50,9 +50,8 @@ def index(request):
             # print(err, file=sys.stderr)
             error = err
       
-        # ALL RECORDS
-        # Recogemos la lista que esta generada para el select del formulario
-        # Filtramos la lista cogiendo los dos valores que tiene por tupla pero solo usamos uno, ya que esta repetido
+        # ALL RECORDS        
+        # Listamos los tipos de registros predefinidos en la lista y lanzamos una consula por cada uno
         for tipo in LISTA_TIPOS:
             try:
                 queryFull = list(resolveDNS(valueInput, tipo))    
