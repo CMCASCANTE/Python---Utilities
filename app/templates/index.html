@@ -19,9 +19,9 @@
     </form>    
     
     <div id="resultados">    
-    {% if validValue %}
+    {% if validValue and valueInput %}
         {% if consulta %}
-            <table>
+            <table>                
                 <tr>
                     <th>Registro</th>
                     <th>Tipo</th>
@@ -29,29 +29,41 @@
                 </tr>
             {% for registro in consulta %}
                 <tr>
-                    <td>{{lastValueInput}}</td>
+                    <td>{{valueInput}}</td>
                     <td>{{selectValue}}</td>
                     <td>{{registro}}</td>
                 </tr>
-            {% endfor %}
-            </table>  
+            {% endfor %}            
+            </table>    
         {% else %}            
             {% if error%}
-            <p>
-                {{error}}
-            </p>
+                <p>
+                    {{error}}
+                </p>
             {% else %}
-            <p>
-                No se han encontrado registros
-            </p>
+                <p>
+                    No se han encontrado registros
+                </p>
             {% endif %}
         {% endif %}
+
+        <table>   
+            <caption><h3>Registros comunes</h3></caption>     
+            {% for registro in todosRegistros %}
+            <tr>
+                <td>{{valueInput}}</td>
+                <td>{{registro.tipo}}</td>
+                <td>{{registro.registro}}</td>
+            </tr>    
+            {% endfor %}
+        </table>
+
     {% else %}
         <p>
             Introduce un dominio válido
         </p>
     {% endif %}
     </div>
-       
+    
 </body>
 </html>

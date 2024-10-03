@@ -11,11 +11,13 @@ class DNSForm(forms.Form):
         ("NS", "NS"), 
         ("A", "A"), 
         ("AAAA", "AAAA"),
-        ("TXT", "TXT"), 
+        ("TXT", "TXT"),
+        ("SPF", "SPF"),
         ("MX", "MX"),        
         ("CAA", "CAA"),
         ("CNAME", "CNAME"),        
         ("SRV", "SRV"),
+        ("CAA", "CAA"),
         ("SOA", "SOA")
     ) 
     selectDNS = forms.ChoiceField(label="", choices = TYPE_CHOICES, initial = "A")  
