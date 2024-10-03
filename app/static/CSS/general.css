@@ -1,0 +1,54 @@
+/*GENERAL*/
+* {
+    margin: 0
+}
+body {
+    background-color: rgb(233, 233, 233);
+}
+
+/*TITULO*/
+h1 {
+    height: 2em;
+    padding-top: 1em;
+    text-align: center;    
+    background-color: rgba(47, 108, 206, 0.726);
+    border-bottom: 0.1em inset rgba(47, 108, 206, 0.726);;
+    color: whitesmoke;
+}
+
+/*FORMULARIO*/
+form {
+    background-color: rgba(59,130,246,0.5);
+    border-bottom: 0.2em inset rgba(47, 108, 206, 0.726);;
+    margin-bottom: 2em;
+    padding: 0.5em;
+}
+form div {
+    display: inline;        
+}
+form input {
+    width: 20em;
+    height: 20px;
+}
+form select {
+    width: 5em;
+    height: 26px;
+}
+form input[type="submit"] {
+    width: 8em;
+    height: 26px;
+}
+
+/*RESULTADOS*/
+#resultados {
+    text-align: center;
+}
+#resultados table {        
+    margin: auto;
+    border: 3px outset rgb(233, 233, 233);
+    border-collapse: collapse;
+}
+#resultados table td, #resultados table th{    
+    border: 1px inset rgb(182, 182, 182);
+    padding: 0.5em;
+}
