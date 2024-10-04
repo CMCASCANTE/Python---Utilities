@@ -21,3 +21,9 @@ class DNSForm(forms.Form):
         ("SOA", "SOA")
     ) 
     selectDNS = forms.ChoiceField(label="", choices = TYPE_CHOICES, initial = "A")  
+
+
+class PortForm(forms.Form):
+    # Input
+    ipValue = forms.GenericIPAddressField(label="", protocol="IPv4", max_length=15, initial=None, widget=forms.TextInput(attrs={'placeholder': 'IP'}))
+    portValue = forms.DecimalField(label="", min_value=1, max_value=65535, decimal_places=0, initial=None, widget=forms.NumberInput(attrs={'placeholder': 'Puerto'}))

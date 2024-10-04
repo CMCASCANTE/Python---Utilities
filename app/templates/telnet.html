@@ -7,12 +7,40 @@
     <link rel="stylesheet" href="static/CSS/general.css">
 </head>
 <body>   
-    <h1>Telnet Test</h1>
+    <h1>Testeador de Puertos</h1>
     <nav>
         <a href="/">Home</a> |
-        <a href="/dns">DNS Checker</a> |
-        <a href="/telnet">Telnet Test</a>
-        {{response}}
+        <a href="/dns">Buscador DNS</a> |
+        <a href="/telnet">Tester de Puertos</a>
     </nav>
+
+    <form method="post">
+        {% csrf_token %}
+        {{formulario}}
+        <input type="submit" value="Buscar">
+    </form>        
+    <div id="resultados">
+        {% if validIPValue and validPortValue and ipInput and portInput %}
+            {% if respuesta %}
+                <p>
+                    El puerto {{portInput}} esta abierto
+                </p>    
+            {% else %}
+                <p>
+                    No se ha podido conectar con el puerto {{portInput}}
+                </p>    
+            {% endif %}
+        {% else %}
+            {% if not validIPValue%}
+                <p>
+                    Introduce una IP válida
+                </p>
+            {% elif not validPortValue %}
+                <p>
+                    Introduce un Puerto válido 
+                </p>
+            {% endif %}
+        {% endif %}
+    </div>
 </body>
 </html>
