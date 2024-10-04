@@ -4,12 +4,12 @@ import socket
 import dns.resolver
 from django.views.decorators.csrf import csrf_protect
 from django.shortcuts import render
-from .personalModules.forms import DNSForm
+from .formularios.forms import DNSForm
 import re
 
 # Create your views here.
 @csrf_protect
-def index(request):
+def dnsChecker(request):
     # Variables y recogida de datos
     query = []    
     queryFull = []     
@@ -23,7 +23,7 @@ def index(request):
     
     # Validar datos de input        
     if valueInput:        
-        inputValidatePattern = r"\w*[.]{1}\w*([.]{1}\w*)*"
+        inputValidatePattern = r"(\w|-)*[.]{1}\w*([.]{1}\w*)*"
         if re.match(inputValidatePattern, valueInput)== None:            
             validValue = False
     
@@ -76,4 +76,4 @@ def index(request):
         "todosRegistros": allRecordsData
     }
     # Lanzamiento y paso de datos a la Template HTML
-    return HttpResponse(render(request, "../templates/index.html", context))
+    return HttpResponse(render(request, "../templates/dnsChecker.html", context))

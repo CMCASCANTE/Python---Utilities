@@ -19,6 +19,8 @@ from django.urls import path
 from app import urls
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path("", urls.views.index, name="index")
+    path('admin/', admin.site.urls),    
+    path("", urls.index.index, name="index"),
+    path("dns", urls.dnsChecker.dnsChecker, name="dnsChecker"),
+    path("telnet", urls.telnet.telnet, name="telnet")
 ]

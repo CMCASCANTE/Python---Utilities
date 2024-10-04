@@ -12,8 +12,20 @@ h1 {
     padding-top: 1em;
     text-align: center;    
     background-color: rgba(47, 108, 206, 0.726);
-    border-bottom: 0.1em inset rgba(47, 108, 206, 0.726);;
     color: whitesmoke;
+}
+
+/*NAVEGADOR*/
+nav {
+    padding: 0.5em;
+    background-color: rgba(47, 108, 206, 0.726);
+    border-bottom: 0.2em inset rgba(47, 108, 206, 0.726);
+}
+nav a {
+    color: whitesmoke;
+}
+nav a:hover {
+    color: rgba(18, 65, 139, 0.87);;
 }
 
 /*FORMULARIO*/

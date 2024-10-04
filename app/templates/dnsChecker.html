@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project App</title>
+    <link rel="stylesheet" href="static/CSS/general.css">
+</head>
+<body>       
+    <h1>
+        Buscador DNS
+    </h1>
+    <nav>
+        <a href="/">Home</a> |
+        <a href="/dns">DNS Checker</a> |
+        <a href="/telnet">Telnet Test</a>
+    </nav>
+    
+    <form method="post">
+        {% csrf_token %}
+        {{formulario}}
+        <input type="submit" value="Buscar">
+    </form>    
+    
+    <div id="resultados">    
+    {% if validValue and valueInput %}
+        {% if consulta %}
+            <table>                
+                <tr>
+                    <th>Registro</th>
+                    <th>Tipo</th>
+                    <th>Valor</th>
+                </tr>
+            {% for registro in consulta %}
+                <tr>
+                    <td>{{valueInput}}</td>
+                    <td>{{selectValue}}</td>
+                    <td>{{registro}}</td>
+                </tr>
+            {% endfor %}            
+            </table>    
+        {% else %}            
+            {% if error%}
+                <p>
+                    {{error}}
+                </p>
+            {% else %}
+                <p>
+                    No se han encontrado registros
+                </p>
+            {% endif %}
+        {% endif %}
+
+        <table>   
+            <caption><h3>Registros comunes</h3></caption>     
+            {% for registro in todosRegistros %}
+            <tr>
+                <td>{{valueInput}}</td>
+                <td>{{registro.tipo}}</td>
+                <td>{{registro.registro}}</td>
+            </tr>    
+            {% endfor %}
+        </table>
+
+    {% else %}
+        <p>
+            Introduce un dominio válido
+        </p>
+    {% endif %}
+    </div>
+    
+</body>
+</html>

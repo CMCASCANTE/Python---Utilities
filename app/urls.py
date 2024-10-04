@@ -1,7 +1,14 @@
 from django.urls import path
 
-from . import views
+
+from app.vistas import telnet
+from app.vistas import dnsChecker
+from app.vistas import index
+
 
 urlpatterns = [
-    path("", views.index, name="index"),
+    #path("", views.index, name="index"),
+    path("", index.index, name="index"),
+    path("dns", dnsChecker.dnsChecker, name="dnsChecker"),
+    path("telnet", telnet.telnet, name="telnet"),
 ]
