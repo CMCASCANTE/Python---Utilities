@@ -16,13 +16,13 @@
         <a href="/telnet">Tester de Puertos</a>
     </nav>
     
-    <form method="post">
+    <form method="post" class="form dns">
         {% csrf_token %}
         {{formulario}}
         <input type="submit" value="Buscar">
     </form>    
     
-    <div id="resultados">    
+    <div class="resultados dns">    
     {% if validValue and valueInput %}
         {% if consulta %}
             <table>                
@@ -62,9 +62,14 @@
             {% endfor %}
         </table>
 
+    {% elif not valueInput %}
+        <p>
+            Introduce un dominio o subdominio para realizar una búsqueda
+        </p>
+
     {% else %}
         <p>
-            Introduce un dominio válido
+            Introduce un dominio/subdominio válido
         </p>
     {% endif %}
     </div>

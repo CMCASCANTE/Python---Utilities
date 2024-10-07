@@ -14,24 +14,31 @@
         <a href="/telnet">Tester de Puertos</a>
     </nav>
 
-    <form method="post">
+    <form method="post" class="form telnet" id="formTelnet">
         {% csrf_token %}
         {{formulario}}
-        <input type="submit" value="Buscar">
-    </form>        
-    <div id="resultados">
+        <button type="submit" form="formTelnet" onclick="deshabilitarBuscar()">
+            <div>Buscar</div>                
+        </button>        
+    </form>     
+    
+
+    
+
+
+    <div class="resultados telnet">
         {% if validIPValue and validPortValue and ipInput and portInput %}
             {% if respuesta %}
                 <p>
                     El puerto {{portInput}} esta abierto
-                </p>    
+                </p>
             {% else %}
                 <p>
                     No se ha podido conectar con el puerto {{portInput}}
-                </p>    
+                </p>  
             {% endif %}
         {% else %}
-            {% if not validIPValue%}
+            {% if not validIPValue %}
                 <p>
                     Introduce una IP válida
                 </p>
@@ -39,8 +46,27 @@
                 <p>
                     Introduce un Puerto válido 
                 </p>
+            {% else %}
+                <p>
+                    Introduce una IP y un Puerto para comprobar la conectividad
+                </p>
             {% endif %}
         {% endif %}
     </div>
+
+    <script type="text/javascript">
+        botonBuscar = document.querySelectorAll('[type="submit"]')[0].getElementsByTagName('div')[0];        
+        requestDone = true
+        function deshabilitarBuscar() {                        
+            if (!requestDone) {
+                event.preventDefault()
+            } else {
+                botonBuscar.innerHTML = "Buscando..."
+                botonBuscar.classList.add("loading")
+                requestDone = false
+            }
+        }            
+    </script>
+    
 </body>
 </html>

@@ -13,6 +13,7 @@ def telnet(request):
     portInput = None if request.POST.get("portValue")==None else request.POST.get("portValue")
     form = PortForm(initial= {"ipValue": ipInput, "portValue": portInput})  
     respuesta = ""
+ 
     
     # Validar datos de input        
     if ipInput:        
@@ -33,13 +34,14 @@ def telnet(request):
             request = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             try:
                 request.connect((ip, int(port)))
-                request.shutdown(2)
+                request.shutdown(2)                    
                 return True
-            except:                
+            except: 
                 return False
         
         # Lanzamos 
         respuesta=isOpen(ipInput, portInput)
+
 
     # Dict con datos para pasar a la Template
     datos = {

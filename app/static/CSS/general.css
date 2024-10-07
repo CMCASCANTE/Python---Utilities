@@ -50,23 +50,50 @@ form input[type="submit"] {
     width: 8em;
     height: 26px;
 }
+form button {
+    width: 8em;
+    height: 26px;
+}
+.telnet input{
+    width: 10em;
+}
+.telnet .number {
+    width: 5em;
+}
 
 /*RESULTADOS*/
-#resultados {
+.resultados {
     text-align: center;
 }
-#resultados table {        
+.resultados table {        
     margin: auto;
     border: 3px outset rgb(233, 233, 233);
     border-collapse: collapse;
 }
 
-#resultados table caption {    
+.resultados table caption {    
     margin: 1em;
     margin-top: 2em;
     text-transform: uppercase;
 }
-#resultados table td, #resultados table th{    
+.resultados table td, .resultados table th{    
     border: 1px inset rgb(182, 182, 182);
     padding: 0.5em;
 }
+
+
+
+
+/*Animación de loading*/
+.loading {
+    animation: salto 1.5s infinite
+}
+@keyframes salto {
+    from {
+        opacity: 0.8;
+    }
+    to{
+         opacity: 0.2;
+    }
+}
+
