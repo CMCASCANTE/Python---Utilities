@@ -16,10 +16,12 @@
         <a href="/telnet">Tester de Puertos</a>
     </nav>
     
-    <form method="post" class="form dns">
+    <form method="post" class="form dns" id="formDNS">
         {% csrf_token %}
         {{formulario}}
-        <input type="submit" value="Buscar">
+        <button type="submit" form="formDNS" onclick="deshabilitarBuscar()">
+            <div>Buscar</div>                
+        </button>  
     </form>    
     
     <div class="resultados dns">    
@@ -38,7 +40,7 @@
                     <td>{{registro}}</td>
                 </tr>
             {% endfor %}            
-            </table>    
+            </table>              
         {% else %}            
             {% if error%}
                 <p>
@@ -47,20 +49,22 @@
             {% else %}
                 <p>
                     No se han encontrado registros
-                </p>
+                </p>                
             {% endif %}
         {% endif %}
 
-        <table>   
-            <caption><h3>Registros comunes</h3></caption>     
-            {% for registro in todosRegistros %}
-            <tr>
-                <td>{{valueInput}}</td>
-                <td>{{registro.tipo}}</td>
-                <td>{{registro.registro}}</td>
-            </tr>    
-            {% endfor %}
-        </table>
+        {% if todosRegistros%}
+            <table>   
+                <caption><h3>Registros comunes</h3></caption>     
+                {% for registro in todosRegistros %}
+                <tr>
+                    <td>{{valueInput}}</td>
+                    <td>{{registro.tipo}}</td>
+                    <td>{{registro.registro}}</td>
+                </tr>    
+                {% endfor %}
+            </table>
+            {% endif %}
 
     {% elif not valueInput %}
         <p>
@@ -74,5 +78,19 @@
     {% endif %}
     </div>
     
+    <script type="text/javascript">
+        botonBuscar = document.querySelectorAll('[type="submit"]')[0].getElementsByTagName('div')[0];        
+        requestDone = true
+        function deshabilitarBuscar() {                        
+            if (!requestDone) {
+                event.preventDefault()
+            } else {
+                botonBuscar.innerHTML = "Buscando..."
+                botonBuscar.classList.add("loading")
+                requestDone = false
+            }
+        }            
+    </script>
+
 </body>
 </html>

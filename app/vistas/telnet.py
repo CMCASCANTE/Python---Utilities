@@ -32,11 +32,12 @@ def telnet(request):
         # Si se cierra sin conectar o da error devolvemos False, en caso de que conecte devolvemos True
         def isOpen(ip,port):
             request = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            try:
-                request.connect((ip, int(port)))
-                request.shutdown(2)                    
+            try:          
+                # programamos un cierre en 10 segundos si no conecta      
+                request.settimeout(10)
+                request.connect((ip, int(port)))                
                 return True
-            except: 
+            except Exception as err: 
                 return False
         
         # Lanzamos 
