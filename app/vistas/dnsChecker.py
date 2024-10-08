@@ -13,7 +13,7 @@ def dnsChecker(request):
     # Variables y recogida de datos
     query = []    
     queryFull = []     
-    valueInput = None if request.POST.get("domainValue")==None else request.POST.get("domainValue")
+    valueInput = None if request.POST.get("domainValue")==None else request.POST.get("domainValue").strip()
     validValue = True    
     valueSelect = "A" if request.POST.get("selectDNS")==None else request.POST.get("selectDNS")
     form = DNSForm(initial= {"domainValue": valueInput, "selectDNS": valueSelect})  

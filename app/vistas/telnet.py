@@ -7,10 +7,10 @@ import re
 def telnet(request):
     # Variables de la aplicación
     datos =[]
-    ipInput = None if request.POST.get("ipValue")==None else request.POST.get("ipValue")
+    ipInput = None if request.POST.get("ipValue")==None else request.POST.get("ipValue").strip()
     validIPValue = True    
     validPortValue = True    
-    portInput = None if request.POST.get("portValue")==None else request.POST.get("portValue")
+    portInput = None if request.POST.get("portValue")==None else request.POST.get("portValue").strip()
     form = PortForm(initial= {"ipValue": ipInput, "portValue": portInput})  
     respuesta = ""
  
