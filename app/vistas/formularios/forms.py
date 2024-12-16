@@ -23,6 +23,19 @@ class DNSForm(forms.Form):
     selectDNS = forms.ChoiceField(label="", choices = TYPE_CHOICES, initial = "A")  
 
 
+
+    # Select    
+    NAMESERVER_CHOICES =(          
+        ("8.8.8.8", "Google"),
+        ("1.0.0.1", "Cloudflare")        
+    ) 
+    nameServer = forms.ChoiceField(label="", choices = NAMESERVER_CHOICES, initial = "8.8.8.8")  
+
+
+
+
+
+
 class PortForm(forms.Form):
     # Input
     ipValue = forms.GenericIPAddressField(label="", protocol="IPv4", max_length=15, required=False, initial=None, widget=forms.TextInput(attrs={'placeholder': 'IP'}))

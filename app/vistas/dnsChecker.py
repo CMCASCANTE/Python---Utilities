@@ -16,7 +16,8 @@ def dnsChecker(request):
     valueInput = None if request.POST.get("domainValue")==None else request.POST.get("domainValue").strip()
     validValue = True    
     valueSelect = "ALL" if request.POST.get("selectDNS")==None else request.POST.get("selectDNS")
-    form = DNSForm(initial= {"domainValue": valueInput, "selectDNS": valueSelect})  
+    valueNameserver = "8.8.8.8" if request.POST.get("nameServer")==None else request.POST.get("nameServer")
+    form = DNSForm(initial= {"domainValue": valueInput, "selectDNS": valueSelect, "nameServer": valueNameserver})  
     error = ""    
     allRecordsData = []    
     allRecordsCname = False
@@ -35,7 +36,7 @@ def dnsChecker(request):
         # objeto que contiene la consulta
         resolver = dns.resolver.Resolver()        
         # configuración de los servidores DNS a consultar
-        resolver.nameservers=[socket.gethostbyname('8.8.8.8')]
+        resolver.nameservers=[socket.gethostbyname(valueNameserver)]
         def resolveDNS(input, select):
             # lanzamiento de la consulta
             answer = resolver.query(input, select)
