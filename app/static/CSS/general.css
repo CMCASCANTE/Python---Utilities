@@ -43,7 +43,7 @@ form input {
     height: 20px;
 }
 form select {
-    width: 5em;
+    width: 5.5em;
     height: 26px;
 }
 form input[type="submit"] {

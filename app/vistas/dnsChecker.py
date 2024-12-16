@@ -15,11 +15,12 @@ def dnsChecker(request):
     queryFull = []     
     valueInput = None if request.POST.get("domainValue")==None else request.POST.get("domainValue").strip()
     validValue = True    
-    valueSelect = "A" if request.POST.get("selectDNS")==None else request.POST.get("selectDNS")
+    valueSelect = "ALL" if request.POST.get("selectDNS")==None else request.POST.get("selectDNS")
     form = DNSForm(initial= {"domainValue": valueInput, "selectDNS": valueSelect})  
     error = ""    
-    allRecordsData = []
-    LISTA_TIPOS = ["NS", "A", "TXT", "MX", "CNAME"]
+    allRecordsData = []    
+    allRecordsCname = False
+    LISTA_TIPOS = ["NS", "A", "AAAA", "TXT", "SPF", "MX", "CNAME", "CAA", "SRV"]
     
     # Validar datos de input        
     if valueInput:        
@@ -32,7 +33,7 @@ def dnsChecker(request):
     if validValue and valueInput:
         # creación y configuración del objeto para la consulta
         # objeto que contiene la consulta
-        resolver = dns.resolver.Resolver();         
+        resolver = dns.resolver.Resolver()        
         # configuración de los servidores DNS a consultar
         resolver.nameservers=[socket.gethostbyname('8.8.8.8')]
         def resolveDNS(input, select):
@@ -56,7 +57,13 @@ def dnsChecker(request):
             try:
                 queryFull = list(resolveDNS(valueInput, tipo))    
                 for rdata in queryFull:
-                    allRecordsData.append({"tipo": tipo, "registro": rdata})
+                    if tipo == "CNAME" and rdata: 
+                        allRecordsData.clear()
+                        allRecordsData.append({"tipo": tipo, "registro": rdata})  
+                        allRecordsCname = True                  
+                        break
+                    else:    
+                        allRecordsData.append({"tipo": tipo, "registro": rdata})                    
             except Exception as err:
                 # print(err, file=sys.stderr)
                 error = err
@@ -73,7 +80,8 @@ def dnsChecker(request):
         "selectValue": valueSelect,
         "validValue": validValue,
         "error": error,        
-        "todosRegistros": allRecordsData
+        "todosRegistros": allRecordsData,
+        "todosRegistrosCname": allRecordsCname
     }
     # Lanzamiento y paso de datos a la Template HTML
     return HttpResponse(render(request, "../templates/dnsChecker.html", context))

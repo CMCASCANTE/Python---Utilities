@@ -8,13 +8,13 @@ class DNSForm(forms.Form):
 
     # Select    
     TYPE_CHOICES =( 
+        ("ALL", "ALL"), 
         ("NS", "NS"), 
         ("A", "A"), 
         ("AAAA", "AAAA"),
         ("TXT", "TXT"),
         ("SPF", "SPF"),
-        ("MX", "MX"),        
-        ("CAA", "CAA"),
+        ("MX", "MX"),                
         ("CNAME", "CNAME"),        
         ("SRV", "SRV"),
         ("CAA", "CAA"),

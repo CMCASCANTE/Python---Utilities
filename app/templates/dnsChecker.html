@@ -26,51 +26,74 @@
     
     <div class="resultados dns">    
     {% if validValue and valueInput %}
-        {% if consulta %}
-            <table>                
-                <tr>
-                    <th>Registro</th>
-                    <th>Tipo</th>
-                    <th>Valor</th>
-                </tr>
-            {% for registro in consulta %}
-                <tr>
-                    <td>{{valueInput}}</td>
-                    <td>{{selectValue}}</td>
-                    <td>{{registro}}</td>
-                </tr>
-            {% endfor %}            
-            </table>              
-        {% else %}            
-            {% if error%}
-                <p>
-                    {{error}}
-                </p>
+        {% if selectValue == "ALL" %}
+            {% if todosRegistros %}
+                <table>   
+                    <caption><h3> </h3></caption>     
+                    <tr>
+                        <th>Registro</th>
+                        <th>Tipo</th>
+                        <th>Valor</th>
+                    </tr>
+                    {% for registro in todosRegistros %}
+                        <tr>
+                            <td>{{valueInput}}</td>
+                            <td>{{registro.tipo}}</td>
+                            <td>{{registro.registro}}</td>
+                        </tr>    
+                    {% endfor %}
+                </table>
             {% else %}
-                <p>
-                    No se han encontrado registros
-                </p>                
+                {% if error%}
+                    <p>
+                        {{error}}
+                    </p>
+                {% else %}
+                    <p>
+                        No se han encontrado registros
+                    </p>                
+                {% endif %}
+            {% endif %}
+
+        {% else %}
+            {% if consulta %}            
+                {% if todosRegistrosCname and selectValue == "CNAME" or not todosRegistrosCname %}                  
+                    <table>          
+                        <caption><h3> </h3></caption>           
+                        <tr>
+                            <th>Registro</th>
+                            <th>Tipo</th>
+                            <th>Valor</th>
+                        </tr>
+                        {% for registro in consulta %}
+                            <tr>
+                                <td>{{valueInput}}</td>
+                                <td>{{selectValue}}</td>
+                                <td>{{registro}}</td>
+                            </tr>
+                        {% endfor %}            
+                    </table>  
+                {% else %}
+                    <p>
+                        Este dominio/subdominio tiene creado un registro CNAME
+                    </p>
+                {% endif %}          
+            {% else %}            
+                {% if error%}
+                    <p>
+                        {{error}}
+                    </p>
+                {% else %}
+                    <p>
+                        No se han encontrado registros
+                    </p>                
+                {% endif %}
             {% endif %}
         {% endif %}
-
-        {% if todosRegistros%}
-            <table>   
-                <caption><h3>Registros comunes: NS - A - TXT - MX</h3></caption>     
-                {% for registro in todosRegistros %}
-                <tr>
-                    <td>{{valueInput}}</td>
-                    <td>{{registro.tipo}}</td>
-                    <td>{{registro.registro}}</td>
-                </tr>    
-                {% endfor %}
-            </table>
-            {% endif %}
-
     {% elif not valueInput %}
         <p>
             Introduce un dominio o subdominio para realizar una búsqueda
         </p>
-
     {% else %}
         <p>
             Introduce un dominio/subdominio válido
