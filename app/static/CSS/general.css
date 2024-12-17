@@ -46,6 +46,11 @@ form select {
     width: 5.5em;
     height: 26px;
 }
+form .nameServerInput {
+    float: right;
+    width: 7em;
+    height: 26px;
+} 
 form input[type="submit"] {
     width: 8em;
     height: 26px;

@@ -27,10 +27,14 @@ class DNSForm(forms.Form):
     # Select    
     NAMESERVER_CHOICES =(          
         ("8.8.8.8", "Google"),
-        ("1.0.0.1", "Cloudflare")        
+        ("1.0.0.1", "Cloudflare"),
+         ("208.67.222.222", "OpenDNS"),
+          ("9.9.9.9", "Quad9")    
     ) 
     nameServer = forms.ChoiceField(label="", choices = NAMESERVER_CHOICES, initial = "8.8.8.8")  
 
+    # Añadimos un valor al atributo clase para darle CSS
+    nameServer.widget.attrs['class'] = "nameServerInput"
 
 
 
