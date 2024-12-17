@@ -3,7 +3,7 @@
     margin: 0
 }
 body {
-    background-color: rgb(233, 233, 233);
+    background-color: rgb(233, 233, 233);     
 }
 
 /*TITULO*/
@@ -68,14 +68,13 @@ form button {
 
 /*RESULTADOS*/
 .resultados {
-    text-align: center;
+    text-align: center;       
 }
 .resultados table {        
     margin: auto;
     border: 3px outset rgb(233, 233, 233);
     border-collapse: collapse;
 }
-
 .resultados table caption {    
     margin: 1em;
     margin-top: 2em;
@@ -85,7 +84,9 @@ form button {
     border: 1px inset rgb(182, 182, 182);
     padding: 0.5em;
 }
-
+.resultados table td:nth-child(3) {
+    overflow-wrap: anywhere;
+}
 
 
 
