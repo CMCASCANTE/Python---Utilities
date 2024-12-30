@@ -68,7 +68,8 @@ form button {
 
 /*RESULTADOS*/
 .resultados {
-    text-align: center;       
+    text-align: center;   
+    margin: 0.5em;
 }
 .resultados table {        
     margin: auto;
@@ -86,6 +87,9 @@ form button {
 }
 .resultados table td:nth-child(3) {
     overflow-wrap: anywhere;
+}
+.resultados.telnet p {
+    margin-bottom: 3em;
 }
 
 

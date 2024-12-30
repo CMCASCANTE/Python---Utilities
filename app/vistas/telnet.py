@@ -36,9 +36,9 @@ def telnet(request):
                 # programamos un cierre en 10 segundos si no conecta      
                 request.settimeout(10)
                 request.connect((ip, int(port)))                
-                return True
+                return 1
             except Exception as err: 
-                return False
+                return err
         
         # Lanzamos 
         respuesta=isOpen(ipInput, portInput)
