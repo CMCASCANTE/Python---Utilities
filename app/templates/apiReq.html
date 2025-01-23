@@ -16,7 +16,7 @@
         <a href="/">Home</a> |
         <a href="/dns">Buscador DNS</a> |
         <a href="/telnet">Tester de Puertos</a> |
-        <a href="/api">Api Requests</a>
+        <a href="/api">Peticiones API</a>
     </nav>
 
 
@@ -24,7 +24,7 @@
         {% csrf_token %}
         {{formulario}}
         <button type="submit" form="formAPI" onclick="deshabilitarBuscar()">
-            <div>Request</div>                
+            <div>Enviar</div>                
         </button>          
         <div class="authForm api">        
             <div class="apiAuth">
@@ -64,7 +64,7 @@
             if (!requestDone) {
                 event.preventDefault()
             } else {
-                botonBuscar.innerHTML = "Buscando..."
+                botonBuscar.innerHTML = "Lanzando..."
                 botonBuscar.classList.add("loading")
                 requestDone = false
             }
