@@ -54,18 +54,7 @@ def api(request):
                 ###################
                 # EN CONSTRUCCION #
                 ###################
-                # The API endpoint
-                url = "https://api.ionos.com/auth/v1/tokens/generate"
-
-                # Data to be sent
-                data = {
-                    "userID": 1,
-                    "title": "Making a POST request",
-                    "body": "This is the data we created."
-                }
-
-                # A POST request to the API
-                response = requests.post(url, json=data)
+                pass
             
             respuesta = response.text
         except Exception as err:

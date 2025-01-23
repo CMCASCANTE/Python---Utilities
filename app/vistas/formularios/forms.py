@@ -58,10 +58,7 @@ class ApiForm(forms.Form):
         ("GET", "GET"), 
         ("POST", "POST")        
     ) 
-    apiRequestType = forms.ChoiceField(label="", choices = TYPE_CHOICES, initial = "GET")  
-
-
-
+    apiRequestType = forms.ChoiceField(label="", choices = TYPE_CHOICES, initial = "GET", widget=forms.Select(attrs={'disabled': ''}))  
 class ApiFormAuth(forms.Form):
 
     # Select    
@@ -71,13 +68,10 @@ class ApiFormAuth(forms.Form):
         ("Token", "Token")        
     ) 
     apiAuthType = forms.ChoiceField(label="Auth Type", choices = TYPE_CHOICES, initial = "", widget=forms.Select(attrs={'onchange':'authHidden(this)'}))  
-
-
-
 class ApiFormAuthBasic(forms.Form):
     # Auth
     basicUser = forms.CharField(label="", max_length=200, required=False, initial=None, widget=forms.TextInput(attrs={'placeholder': 'User'}))
-    basicPass = forms.CharField(label="", max_length=200, required=False, initial=None, widget=forms.PasswordInput(attrs={'placeholder': 'Pass'}))
+    basicPass = forms.CharField(label="", max_length=200, required=False, initial=None, widget=forms.PasswordInput(attrs={'placeholder': 'Pass', 'autocomplete': "off"}))
     
 class ApiFormAuthToken(forms.Form):
     # Auth

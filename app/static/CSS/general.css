@@ -123,7 +123,9 @@ form button {
     color: whitesmoke;
     text-align: left;
 }
-
+.resultados.api p {
+    margin-top: 3em;
+}
 
 /*Animación de loading*/
 .loading {
