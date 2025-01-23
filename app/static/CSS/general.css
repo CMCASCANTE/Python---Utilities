@@ -31,7 +31,7 @@ nav a:hover {
 /*FORMULARIO*/
 form {
     background-color: rgba(59,130,246,0.5);
-    border-bottom: 0.2em inset rgba(47, 108, 206, 0.726);;
+    border-bottom: 0.2em inset rgba(47, 108, 206, 0.726);
     margin-bottom: 2em;
     padding: 0.5em;
 }
@@ -65,6 +65,26 @@ form button {
 .telnet .number {
     width: 5em;
 }
+#formAPI {
+    margin-bottom: 0;
+    border-bottom: 0.2em solid rgba(47, 108, 206, 0.726);
+}
+.apiAuth, .apiBasic, .apiToken {
+    display: block;
+    margin-top: 0.5em;
+}
+.apiBasic, .apiToken {    
+    display: none;  
+}
+.apiBasic input{
+    width: 25%;
+}
+.apiToken #id_tokenKey{
+    width: 15%;
+}
+.apiToken #id_tokenValue {
+    width: 80%;
+}
 
 /*RESULTADOS*/
 .resultados {
@@ -91,7 +111,18 @@ form button {
 .resultados.telnet p {
     margin-bottom: 3em;
 }
-
+.resultados.api {
+    margin: 0;
+}
+.resultados.api pre {
+    background-color: rgba(47, 108, 206, 0.726);        
+    padding: 1em;
+    overflow-wrap: anywhere;    
+    overflow-x: auto;
+    min-height: 300px;
+    color: whitesmoke;
+    text-align: left;
+}
 
 
 /*Animación de loading*/
@@ -106,4 +137,5 @@ form button {
          opacity: 0.2;
     }
 }
+
 

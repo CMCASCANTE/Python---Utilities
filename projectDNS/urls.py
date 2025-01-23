@@ -22,5 +22,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),    
     path("", urls.index.index, name="index"),
     path("dns", urls.dnsChecker.dnsChecker, name="dnsChecker"),
-    path("telnet", urls.telnet.telnet, name="telnet")
+    path("telnet", urls.telnet.telnet, name="telnet"),
+    path("api", urls.api.api, name="api"),
 ]
