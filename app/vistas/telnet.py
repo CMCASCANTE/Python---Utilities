@@ -3,6 +3,7 @@ from django.shortcuts import render
 from .formularios.forms import PortForm
 import socket
 import re
+import asyncio, telnetlib3
 
 def telnet(request):
     # Variables de la aplicación
@@ -30,7 +31,7 @@ def telnet(request):
     # Si los datos son correctos, lanzamos la comprobación de puertos abiertos    
     if validIPValue and validPortValue and ipInput and portInput:
         # Si se cierra sin conectar o da error devolvemos False, en caso de que conecte devolvemos True
-        def isOpen(ip,port):
+        async def isOpen(ip,port):            
             request = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             try:          
                 # programamos un cierre en 10 segundos si no conecta      
@@ -39,9 +40,9 @@ def telnet(request):
                 return 1
             except Exception as err: 
                 return err
-        
+       
         # Lanzamos 
-        respuesta=isOpen(ipInput, portInput)
+        respuesta=asyncio.run(isOpen(ipInput, portInput))
 
 
     # Dict con datos para pasar a la Template
