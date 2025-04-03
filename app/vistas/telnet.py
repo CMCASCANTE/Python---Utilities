@@ -3,7 +3,7 @@ from django.shortcuts import render
 from .formularios.forms import PortForm
 import socket
 import re
-import asyncio, telnetlib3
+import asyncio
 
 def telnet(request):
     # Variables de la aplicación

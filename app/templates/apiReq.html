@@ -36,7 +36,13 @@
             <div class="apiToken">
                 {{formularioAuthToken}}
             </div>
-        </div>        
+            <div class="bodyFieldSelect">
+                {{formfieldSelect}}
+            </div>            
+            <div class="formFields">
+                {{formFields}} 
+             </div>
+        </div>                
     </form>    
  
 
@@ -48,11 +54,11 @@
             Función de API Request en proceso de construcción...
         </p>
         <p>
-            Por el momento puedes lanzar peticiones GET
-        </p>
+            Por el momento puedes lanzar peticiones GET           
+        </p>        
     {% endif %}
     </div>
-
+    {{test}} 
 
 
     <script type="text/javascript">
@@ -86,6 +92,24 @@
             }
         }
         authHidden(document.getElementById("id_apiAuthType"))
+
+        // Funcion para ocultar los fields para los parametros de la petición 
+        function authHiddenFields(element) {  
+            // Guardamos todos los fields
+            fieldKeys = document.getElementsByClassName("apiBodyFieldsKeys")
+            fieldValues = document.getElementsByClassName("apiBodyFieldsValues")
+            // Ocultamos todos
+            for (let i = 0; i < fieldKeys.length; i++) {
+                fieldKeys[i].style.display = "none";   
+                fieldValues[i].style.display = "none";   
+            } 
+            // Mostramos solo los que hayamos seleccionado
+            for (let i = 0; i < element.value; i++) {
+                fieldKeys[i].style.display = "block";                
+                fieldValues[i].style.display = "block";               
+            }
+        } 
+        authHiddenFields(document.getElementById("id_bodyFieldSelect"))
     </script>
    
 

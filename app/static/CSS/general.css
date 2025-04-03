@@ -69,11 +69,11 @@ form button {
     margin-bottom: 0;
     border-bottom: 0.2em solid rgba(47, 108, 206, 0.726);
 }
-.apiAuth, .apiBasic, .apiToken {
+.apiAuth, .apiBasic, .apiToken, .bodyFieldSelect {
     display: block;
     margin-top: 0.5em;
 }
-.apiBasic, .apiToken {    
+.apiBasic, .apiToken, .apiBodyFields {    
     display: none;  
 }
 .apiBasic input{
