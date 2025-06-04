@@ -73,8 +73,15 @@ form button {
     display: block;
     margin-top: 0.5em;
 }
-.apiBasic, .apiToken, .apiBodyFields {    
+.apiBodyFieldsKeys{
+    margin-top: 0.5em;
+} 
+.apiBasic, .apiToken, .apiBodyFields, .apiBodyFieldsKeys, .apiBodyFieldsValues {    
     display: none;  
+}
+.formFields div:has(.apiBodyFieldsValues)::after{ 
+    content: " ";    
+    display: block;
 }
 .apiBasic input{
     width: 25%;
@@ -85,6 +92,11 @@ form button {
 .apiToken #id_tokenValue {
     width: 80%;
 }
+.formFieldTextarea {
+    margin-top: 1em;
+} 
+
+
 
 /*RESULTADOS*/
 .resultados {

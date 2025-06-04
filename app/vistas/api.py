@@ -1,3 +1,4 @@
+import ast
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_protect
@@ -7,8 +8,27 @@ from .formularios.forms import ApiFormAuthToken
 from .formularios.forms import ApiFormAuth
 from .formularios.forms import ApiFormReqBodySelect
 from .formularios.forms import ApiFormReqBody
+from .formularios.forms import ApiFormReqBodyTextarea
 import requests
 from requests.auth import HTTPBasicAuth
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -18,11 +38,23 @@ def api(request):
     # Variables
     response = ""
     respuesta = ""
+
+
+
+
+
+
     # Valores del formulario
     valueInput = None if request.POST.get("urlValue")==None else request.POST.get("urlValue").strip()
     valueSelect = "GET" if request.POST.get("apiRequestType")==None else request.POST.get("apiRequestType")
     # Formulario
     form = ApiForm(initial= {"urlValue": valueInput, "apiRequestType": valueSelect})  
+
+
+
+
+
+
 
     # Valores del formulario Auth
     basicUserValue = None if request.POST.get("basicUser")==None else request.POST.get("basicUser").strip()
@@ -34,6 +66,16 @@ def api(request):
     formAuth = ApiFormAuth(initial= {"apiAuthType": authValue})  
     formAuthBasic = ApiFormAuthBasic(initial= {"basicUser": basicUserValue, "basicPass": basicPassValue})  
     formAuthToken = ApiFormAuthToken(initial= {"tokenKey": tokenKeyValue, "tokenValue": tokenValueValue})  
+
+
+
+
+
+
+
+
+
+
 
     # Valores para el formulario par los campos de los parametros
     formFieldsSelectValue = "None" if request.POST.get("bodyFieldSelect")==None else request.POST.get("bodyFieldSelect")
@@ -75,12 +117,36 @@ def api(request):
     if formFieldsSelectValue != "None":
         for i in range(int(formFieldsSelectValue)):
             params.update({basicBodyKey[i]: basicBodyValue[i]})
+           
 
-    
+
+
+
+    # Valores para formulario Textarea que recoge los datos de body para POST
+    formFieldsTextareaValue = None if request.POST.get("bodyTextarea")==None else request.POST.get("bodyTextarea").strip()
+    # Formulario Textarea que recoge los datos de body para POST
+    formFieldsTextarea = ApiFormReqBodyTextarea(initial= {"bodyTextarea": formFieldsTextareaValue})  
+
+
+
+
+
+
+
+
+
+
+
+
+  
 
     # Peticion
-    if valueInput:
+    if valueInput:        
         try:
+
+
+
+
             # GET
             if valueSelect == "GET":                
                 # The API endpoint
@@ -90,23 +156,78 @@ def api(request):
                 tokenAuth = {'Authorization': f'{tokenKeyValue} {tokenValueValue}'}
                 # A GET request to the API
                 if authValue == "Token":                    
-                    response = requests.get(url, headers=tokenAuth)
+                    response = requests.get(url, headers=tokenAuth, params = params)
                 elif authValue == "Basic":                    
-                    response = requests.get(url, auth=basicHeaders, params = params )
+                    response = requests.get(url, auth=basicHeaders, params = params)
                 else:                    
-                    response = requests.get(url)
+                    response = requests.get(url, params = params)
             
+
+
+
             # POST
             elif valueSelect == "POST":
-                ###################
-                # EN CONSTRUCCION #
-                ###################
-                pass
-            
-            respuesta = response.text
+                # Iniciación de variables
+                bodyParams : dict = ""
+                # The API endpoint
+                url = valueInput
+                # Auth Variables                        
+                basicHeaders = HTTPBasicAuth(basicUserValue, basicPassValue)
+                tokenAuth = {'Authorization': f'{tokenKeyValue} {tokenValueValue}'}                
+                # A POST request to the API            
+                # Convertimos la string del textarea a un dict para poder recoger los parámetros 
+                if formFieldsTextareaValue: 
+                    try:
+                        bodyParams = ast.literal_eval(formFieldsTextareaValue)
+                    except:
+                        respuesta = "Introduce los parámetros en formato JSON"
+                else:
+                    bodyParams = ""
+                # Lanzamos la request 
+                # Si has introducido parámetros pero no tienen el formato correcto no haces nada
+                if respuesta:
+                    pass
+                else: 
+                    if authValue == "Token":
+                        response = requests.post(url, headers=tokenAuth, json = bodyParams)
+                    elif authValue == "Basic":                    
+                        response = requests.post(url, auth=basicHeaders, json = bodyParams) # data=json.dumps(data)) #  json = params)
+                    else:
+                        response = requests.post(url, data = bodyParams)
+
+                    respuesta = response.text
+                    
         except Exception as err:
                 # print(f"Error: {err}")
                 respuesta = err
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     context = {       
         "respuesta": respuesta,  
@@ -117,6 +238,7 @@ def api(request):
         "valueSelect": valueSelect, 
         "formfieldSelect": formFieldsSelect,       
         "formFields": paramFields,
-        "test": params     
+        "formfieldTextarea" : formFieldsTextarea,
+        "formfieldTextareaValue" : formFieldsTextarea
     }
     return HttpResponse(render(request, "../templates/apiReq.html", context))

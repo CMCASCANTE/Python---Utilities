@@ -35,13 +35,16 @@
             </div>
             <div class="apiToken">
                 {{formularioAuthToken}}
-            </div>
+            </div>        
             <div class="bodyFieldSelect">
                 {{formfieldSelect}}
-            </div>            
+            </div>             
             <div class="formFields">
-                {{formFields}} 
-             </div>
+                {{formFields.as_div}} 
+            </div>        
+            <div class="formFieldTextarea">
+                {{formfieldTextarea}} 
+            </div>                      
         </div>                
     </form>    
  
@@ -54,26 +57,62 @@
             Función de API Request en proceso de construcción...
         </p>
         <p>
-            Por el momento puedes lanzar peticiones GET           
+            Por el momento puedes lanzar peticiones GET y POST          
         </p>        
     {% endif %}
     </div>
-    {{test}} 
-
+    
 
     <script type="text/javascript">
 
+        // Recargar los divs de parámetros en caso de que se cambie de GET a POST, etc...
+        // Obtenemos el elemento que contiene la opción del modo de request
+        selectionMethod = document.getElementById("id_apiRequestType")
+        // Función para mostrar elementos según el método
+        function showElment(method){
+            // Si es GET, dejamos los parametros            
+            if (method == "GET"){ 
+                console.log("asdasdas")
+                document.getElementsByClassName("bodyFieldSelect")[0].style.display = "block";
+                document.getElementsByClassName("formFields")[0].style.display = "block";
+                document.getElementsByClassName("formFieldTextarea")[0].style.display = "none";
+            } 
+            // Si es POST dejamos el text área para poder introducir parámetros mas personalizados
+            if (method == "POST") { 
+                console.log("12434")
+                document.getElementsByClassName("bodyFieldSelect")[0].style.display = "none";
+                document.getElementsByClassName("formFields")[0].style.display = "none";
+                document.getElementsByClassName("formFieldTextarea")[0].style.display = "block";
+            } 
+        } 
+        // Lanzamos la función para cuando se recargue la página
+        showElment(selectionMethod.value)        
+        // Creamos un listener para que cuando se cambie el modo se muestren los elementos correspondientes
+        selectionMethod.addEventListener('change', function() {        
+            showElment(selectionMethod.value)
+        });
+        
+
+
+
+
+
+
         // Funcion para deshabilitar el boton de request mientras busca
         botonBuscar = document.querySelectorAll('[type="submit"]')[0].getElementsByTagName('div')[0];        
+        urlValue = document.getElementById("id_urlValue").value        
         requestDone = true
         function deshabilitarBuscar() {                        
-            if (!requestDone) {
-                event.preventDefault()
-            } else {
-                botonBuscar.innerHTML = "Lanzando..."
-                botonBuscar.classList.add("loading")
-                requestDone = false
-            }
+            if (urlValue){
+                if (!requestDone) {
+                    event.preventDefault()
+                } else {
+                    botonBuscar.innerHTML = "Lanzando..."
+                    botonBuscar.classList.add("loading")
+                    requestDone = false
+                }
+            } 
+            
         }       
 
         // Funcion para ocultar los elementos innecesarios de autenticación
@@ -105,8 +144,8 @@
             } 
             // Mostramos solo los que hayamos seleccionado
             for (let i = 0; i < element.value; i++) {
-                fieldKeys[i].style.display = "block";                
-                fieldValues[i].style.display = "block";               
+                fieldKeys[i].style.display = "inline";                
+                fieldValues[i].style.display = "inline";               
             }
         } 
         authHiddenFields(document.getElementById("id_bodyFieldSelect"))

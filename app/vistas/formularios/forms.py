@@ -143,7 +143,7 @@ class ApiForm(forms.Form):
         ("GET", "GET"), 
         ("POST", "POST")        
     ) 
-    apiRequestType = forms.ChoiceField(label="", choices = TYPE_CHOICES, initial = "GET", widget=forms.Select(attrs={'disabled': ''}))  
+    apiRequestType = forms.ChoiceField(label="", choices = TYPE_CHOICES, initial = "GET", widget=forms.Select(attrs={}))# 'disabled': ''}))  
 
 
 
@@ -175,7 +175,7 @@ class ApiFormAuthToken(forms.Form):
 
 
 
-# Formularios para los parametros de la petición
+# Formularios para los parametros de la petición (GET)
 class ApiFormReqBodySelect(forms.Form):
     # Select    
     TYPE_CHOICES =( 
@@ -204,3 +204,15 @@ class ApiFormReqBody(forms.Form):
             self.fields[fields[key]] = forms.CharField(label="", max_length=200, required=False, initial=None, widget=forms.TextInput(attrs={'placeholder': 'value', 'autocomplete': "off", 'class': 'apiBodyFieldsValues'}))
   
   
+# Formulario para recoger datos con un Textarea (POST) 
+class ApiFormReqBodyTextarea(forms.Form):
+    bodyTextarea = forms.CharField(
+        widget=forms.Textarea(attrs={
+            'placeholder': 'Introduce los parámetros que necesites...',
+            'rows': 8,
+            'cols': 55
+        }),
+        label="",
+        max_length=1500,
+        required=False
+    )

@@ -45,6 +45,14 @@ def telnet(request):
         respuesta=asyncio.run(isOpen(ipInput, portInput))
 
 
+
+
+    
+
+
+
+
+
     # Dict con datos para pasar a la Template
     datos = {
         "respuesta": respuesta,
