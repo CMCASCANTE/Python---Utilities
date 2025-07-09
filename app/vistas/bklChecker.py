@@ -59,8 +59,10 @@ def bklChecker(request):
             if match.group('ip'):
                 resultBool, result = checkIP(valueInput)
             # Si coincide con el patron de Dominio
-            elif match.group('domain'):
-                resultBool, result = checkDomain(valueInput)
+            # elif match.group('domain'):
+                # resultBool, result = checkDomain(valueInput)
+            else:
+                validValue = False  
         # Si no coincide con ninguno indicamos que no es un valor válido
         else:
             validValue = False
@@ -105,6 +107,7 @@ def checkDomain(dominio):
     # Lanzamos la consulta con manejo de excepciones 
     try:
         result = checker.check(dominio)
+        print(result)
         return True, result
         
     except Exception as e:
