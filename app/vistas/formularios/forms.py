@@ -92,6 +92,39 @@ class DNSForm(forms.Form):
 
 
 
+############################################### 
+# Formulario para la función de Listas Negras #
+############################################### 
+class BKLForm(forms.Form):
+    # Input
+    inputValue = forms.CharField(label="", max_length=200, required=False, initial=None, widget=forms.TextInput(attrs={'placeholder': 'IP o Dominio'}))
+    
+
+    
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

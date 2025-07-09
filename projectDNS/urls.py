@@ -23,5 +23,6 @@ urlpatterns = [
     path("", urls.index.index, name="index"),
     path("dns", urls.dnsChecker.dnsChecker, name="dnsChecker"),
     path("telnet", urls.telnet.telnet, name="telnet"),
+    path("bkl", urls.bklChecker.bklChecker, name="bklChecker"),
     path("api", urls.api.api, name="api"),
 ]

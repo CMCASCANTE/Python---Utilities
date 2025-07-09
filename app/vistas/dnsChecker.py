@@ -39,7 +39,7 @@ def dnsChecker(request):
         resolver.nameservers=[socket.gethostbyname(valueNameserver)]
         def resolveDNS(input, select):
             # lanzamiento de la consulta
-            answer = resolver.query(input, select)
+            answer = resolver.resolve(input, select)
             # devolver respuesta
             return answer
 
@@ -48,6 +48,7 @@ def dnsChecker(request):
         # Y gestionando errores para que no salte la excepción y pare el programa
         try:
             query = list(resolveDNS(valueInput, valueSelect))    
+            print(query)
         except Exception as err:
             # print(err, file=sys.stderr)
             error = err
