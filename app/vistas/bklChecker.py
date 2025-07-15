@@ -8,8 +8,42 @@ from pydnsbl import DNSBLIpChecker, DNSBLDomainChecker, providers
 from pydnsbl.providers import BASE_PROVIDERS, Provider
 
 
+
+# Lista de providers custom
+customProvidersList = [
+    'zen.spamhaus.org', # Una de las más completas y reputadas (ZEN consolida SBL, XBL, PBL).
+    'sbl.spamhaus.org', # Spamhaus SBL (Spamhaus Block List).
+    'xbl.spamhaus.org', # Spamhaus XBL (Exploits Block List - botnets, proxies abiertos).
+    'pbl.spamhaus.org', # Spamhaus PBL (Policy Block List - IPs que no deberían enviar directamente a servidores de correo).
+    'b.barracudacentral.org', # Barracuda Reputation Block List.
+    'bl.spamcop.net', # SpamCop Blocking List.
+    'cbl.abuseat.org', # Composite Blocking List (similar a XBL).
+    'dnsbl.sorbs.net', # SORBS (muchas listas dentro de una, puede ser ruidosa si no se filtran las sublistas).
+    'dul.dnsbl.sorbs.net', # SORBS DUL (Dynamic User List).
+    'http.dnsbl.sorbs.net', # SORBS HTTP (servidores HTTP abiertos).
+    'socks.dnsbl.sorbs.net', # SORBS SOCKS (proxies SOCKS abiertos).
+    'misc.dnsbl.sorbs.net', # SORBS MISC (varios problemas).
+    'spam.dnsbl.sorbs.net', # SORBS SPAM (spam reportado).
+    'psbl.surbl.org', # Passive Spam Block List (basada en spam detectado).        
+    'web.dnsbl.sorbs.net', # SORBS WEB (servidores web comprometidos).
+    'safe.dnsbl.sorbs.net', # SORBS SAFE.
+    'dnsbl.dronebl.org', # DroneBL (para sistemas comprometidos).
+    'opm.tornevall.org', # Open Proxy Monitor.    
+    'combined.rbl.msrbl.net', # MSRBL Combined (varias listas).
+    'hostkarma.junkemailfilter.com', # HostKarma.
+    'rbl.interserver.net', # InterServer RBL.
+    'all.s5h.net', # S5H.
+    'dnsbl-1.uceprotect.net', # UCEPROTECT Level 1 (puede ser controvertida por su agresividad).
+    'dnsbl-2.uceprotect.net', # UCEPROTECT Level 2.
+    'dnsbl-3.uceprotect.net', # UCEPROTECT Level 3.
+    'b.cbl.abuseat.org', # CBL (variación de abuse.at).
+    'access.redhawk.org', # Redhawk (para IRC).    
+    'all.rbl.cluecentral.net', # ClueCentral.
+]  
+# Convertimos la lista a objetos Provider 
+customProviders = [Provider(p) for p in customProvidersList]
 # Configuramos los providers de listas negras a los que vamos a consultar 
-providers = BASE_PROVIDERS # + [Provider('yourprovider1.com'), ...]
+providers = BASE_PROVIDERS + customProviders
 
 
 # Create your views here.
@@ -58,6 +92,7 @@ def bklChecker(request):
             # Si coincide con el patron de IP 
             if match.group('ip'):
                 resultBool, result = checkIP(valueInput)
+                print(result.providers)
             # Si coincide con el patron de Dominio
             # elif match.group('domain'):
                 # resultBool, result = checkDomain(valueInput)

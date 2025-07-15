@@ -15,7 +15,7 @@ from pathlib import Path
 from dotenv import load_dotenv
 load_dotenv()
 import os
-
+import threading
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -31,6 +31,11 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
+
+# Variables para el contador de visitas
+VISIT_COUNTER_FILE = os.path.join(BASE_DIR, 'visit_count.txt')
+VISIT_COUNTER_LOCK = threading.Lock()
+
 
 
 # Application definition
@@ -52,7 +57,8 @@ MIDDLEWARE = [
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',    
+    'app.middleware.FileVisitCounterMiddleware'
 ]
 
 ROOT_URLCONF = 'projectDNS.urls'

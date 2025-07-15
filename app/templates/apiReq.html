@@ -16,8 +16,7 @@
         <a href="/">Home</a> |
         <a href="/dns">Buscador DNS</a> |
         <a href="/telnet">Tester de Puertos</a> |
-        <a href="/bkl">Listas negras</a> |
-        <a href="/api">Peticiones API</a>
+        <a href="/bkl">Listas negras</a>        
     </nav>
 
 
@@ -72,15 +71,13 @@
         // Función para mostrar elementos según el método
         function showElment(method){
             // Si es GET, dejamos los parametros            
-            if (method == "GET"){ 
-                console.log("asdasdas")
+            if (method == "GET"){                 
                 document.getElementsByClassName("bodyFieldSelect")[0].style.display = "block";
                 document.getElementsByClassName("formFields")[0].style.display = "block";
                 document.getElementsByClassName("formFieldTextarea")[0].style.display = "none";
             } 
             // Si es POST dejamos el text área para poder introducir parámetros mas personalizados
-            if (method == "POST") { 
-                console.log("12434")
+            if (method == "POST") {                 
                 document.getElementsByClassName("bodyFieldSelect")[0].style.display = "none";
                 document.getElementsByClassName("formFields")[0].style.display = "none";
                 document.getElementsByClassName("formFieldTextarea")[0].style.display = "block";
