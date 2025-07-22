@@ -25,7 +25,7 @@
         </button>  
     </form>    
     
-    <div class="resultados dns">    
+    <div class="resultados dns principal">    
     {% if validValue and valueInput %}
         {% if selectValue == "ALL" %}
             {% if todosRegistros %}
@@ -102,6 +102,10 @@
     {% endif %}
     </div>
     
+    <footer class="footer-container">
+        <p>&copy; 2025 Carlos Martinez. Todos los derechos reservados.</p>
+        <p>Contacto: <a href="mailto:comentarios@lawebdekarlos.es">comentarios@lawebdekarlos.es</a></p>
+    </footer>
     <script type="text/javascript">
         botonBuscar = document.querySelectorAll('[type="submit"]')[0].getElementsByTagName('div')[0];        
         requestDone = true

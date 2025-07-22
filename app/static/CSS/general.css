@@ -20,12 +20,13 @@ nav {
     padding: 0.5em;
     background-color: rgba(47, 108, 206, 0.726);
     border-bottom: 0.2em inset rgba(47, 108, 206, 0.726);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1); 
 }
 nav a {
     color: whitesmoke;
 }
 nav a:hover {
-    color: rgba(18, 65, 139, 0.87);;
+    color: rgba(18, 65, 139, 0.87);
 }
 
 /*FORMULARIO*/
@@ -138,6 +139,48 @@ form button {
 .resultados.api p {
     margin-top: 3em;
 }
+
+
+/* DIV Principal (incluye el de resultados)*/
+.principal{
+    min-height: 30em;
+} 
+
+
+
+
+/* Footer */
+/* Estilos para el footer */
+.footer-container {
+    background-color: rgba(47, 108, 206, 0.726);
+    padding: 20px;
+    text-align: center;
+    margin-top: auto; /* Empuja el footer hacia la parte inferior de la página */
+    box-shadow: 0 -2px 5px rgba(0,0,0,0.1); 
+    border-top: 0.2em outset rgba(47, 108, 206, 0.726); 
+}
+.footer-container p {
+    margin: 5px 0;
+    font-size: 0.9em; 
+    color: whitesmoke;
+}
+.footer-container a {    
+    text-decoration: underline;
+    color: whitesmoke;
+}
+.footer-container a:hover {
+    color: rgba(18, 65, 139, 0.87);
+}
+
+
+
+
+
+
+
+
+
+
 
 /*Animación de loading*/
 .loading {
