@@ -6,64 +6,69 @@
     <title>Project Utilities Web</title>
     <link rel="stylesheet" href="static/CSS/general.css">
 </head>
-<body>       
-    <h1>
-        Listas Negras
-    </h1>
-    <nav>
-        <a href="/">Home</a> |
-        <a href="/dns">Buscador DNS</a> |
-        <a href="/telnet">Tester de Puertos</a> |
-        <a href="/bkl">Listas negras</a>        
-    </nav>
-    
-    <form method="post" class="form dns" id="formDNS">
-        {% csrf_token %}
-        {{formulario}}
-        <button type="submit" form="formDNS" onclick="deshabilitarBuscar()">
-            <div>Buscar</div>                
-        </button>  
-    </form>    
-    
-    <div class="resultados bkl principal">    
-    {% if validValue and valueInput %}
-        {% if resultadoBool %}
-            {% if isListed %}                
-                <table>   
-                    <caption><h5>Se ha encontrado en las siguientes listas</h5></caption>                       
-                    {% for lista in resultado.detected_by %}
-                        <tr>
-                            <td>{{valueInput}}</td>
-                            <td>{{lista}}</td>                            
-                        </tr>    
-                    {% endfor %}
-                </table>
-            {% else %}                
-                <p>
-                    No se encuentra en listas negras
-                </p>                            
-            {% endif %}
+<body>      
+    <div class="contenedor">
+        <h1>
+            Listas Negras
+        </h1>
+        <nav>
+            <a href="/">Home</a> |
+            <a href="/dns">Buscador DNS</a> |
+            <a href="/telnet">Tester de Puertos</a> |
+            <a href="/bkl">Listas negras</a>        
+        </nav>
+        
+        <form method="post" class="form dns" id="formDNS">
+            {% csrf_token %}
+            {{formulario}}
+            <button type="submit" form="formDNS" onclick="deshabilitarBuscar()">
+                <div>Buscar</div>                
+            </button>  
+        </form>    
+        
+        <div class="resultados bkl principal">    
+        {% if validValue and valueInput %}
+            {% if resultadoBool %}
+                {% if isListed %}                
+                    <table>   
+                        <caption><h5>Se ha encontrado en las siguientes listas</h5></caption>                       
+                        {% for lista in resultado.detected_by %}
+                            <tr>
+                                <td>{{valueInput}}</td>
+                                <td>{{lista}}</td>                            
+                            </tr>    
+                        {% endfor %}
+                    </table>
+                {% else %}                
+                    <p>
+                        No se encuentra en listas negras
+                    </p>                            
+                {% endif %}
 
+            {% else %}
+                <p>
+                    {{resultado}}
+                </p>      
+            {% endif %}
+        {% elif not valueInput %}
+            <p>
+                Introduce una IP para realizar una búsqueda
+            </p>
         {% else %}
             <p>
-                {{resultado}}
-            </p>      
+                Introduce una IP válida
+            </p>
         {% endif %}
-    {% elif not valueInput %}
-        <p>
-            Introduce una IP para realizar una búsqueda
-        </p>
-    {% else %}
-        <p>
-            Introduce una IP válida
-        </p>
-    {% endif %}
+        </div>
+        
+        <footer class="footer-container">
+            <p>&copy; 2025 Carlos Martinez. Todos los derechos reservados.</p>
+            <p>Contacto: <a href="mailto:comentarios@lawebdekarlos.es">comentarios@lawebdekarlos.es</a></p>
+        </footer>
     </div>
-    
-    <footer class="footer-container">
-        <p>&copy; 2025 Carlos Martinez. Todos los derechos reservados.</p>
-        <p>Contacto: <a href="mailto:comentarios@lawebdekarlos.es">comentarios@lawebdekarlos.es</a></p>
-    </footer>
+
+
+
     <script type="text/javascript">
         botonBuscar = document.querySelectorAll('[type="submit"]')[0].getElementsByTagName('div')[0];        
         requestDone = true

@@ -2,8 +2,11 @@
 * {
     margin: 0
 }
-body {
+html, body {
     background-color: rgb(233, 233, 233);     
+    height: 100%;
+    margin: 0;
+    padding: 0;  
 }
 
 /*TITULO*/
@@ -142,8 +145,13 @@ form button {
 
 
 /* DIV Principal (incluye el de resultados)*/
+.contenedor{
+    display: flex; /* Convierte el wrapper en un contenedor flex */
+    flex-direction: column; /* Organiza los elementos en columna (header, main, footer) */
+    min-height: 100vh; /* El wrapper debe ocupar al menos el 100% del viewport height */    
+} 
 .principal{
-    min-height: 30em;
+    flex-grow: 1; /* Esto es clave: el main "crece" para ocupar el espacio disponible */
 } 
 
 
