@@ -1,7 +1,7 @@
 # app/middleware.py
 import os
 from django.conf import settings
-import threading
+from django.http import HttpResponseForbidden
 
 # Usamos el bloqueo definido en settings.py para asegurar la seguridad en la escritura del archivo
 # Asegúrate de que VISIT_COUNTER_LOCK se inicialice en settings.py
@@ -136,6 +136,30 @@ class FileVisitCounterMiddleware:
                 print(f"Error al leer o escribir en el archivo del contador: {e}")
             except Exception as e:
                 print(f"Un error inesperado ocurrió en el middleware del contador: {e}")
+
+        response = self.get_response(request)
+        return response
+
+
+
+
+
+
+# Middleware para prohibir el acceso a todo lo que no sea necesario 
+class PermisoMiddleware:
+    def __init__(self, get_response):
+        self.get_response = get_response
+        self.allowed_urls = [
+            '/',
+            '/dns',
+            '/telnet',
+            '/bkl',
+            '/static/CSS/general.css',
+        ]
+
+    def __call__(self, request):
+        if request.path not in self.allowed_urls:
+            return HttpResponseForbidden("Acceso Denegado")
 
         response = self.get_response(request)
         return response
