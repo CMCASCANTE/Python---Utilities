@@ -34,6 +34,9 @@ ALLOWED_HOSTS = ['*']
 
 # Variables para el contador de visitas
 VISIT_COUNTER_FILE = os.path.join(BASE_DIR, 'visit_count.txt')
+VISIT_COUNTER_FILE_DNS = os.path.join(BASE_DIR, 'visit_count_dns.txt')
+VISIT_COUNTER_FILE_TELNET = os.path.join(BASE_DIR, 'visit_count_telnet.txt')
+VISIT_COUNTER_FILE_BKL = os.path.join(BASE_DIR, 'visit_count_bkl.txt')
 VISIT_COUNTER_LOCK = threading.Lock()
 
 

@@ -4,6 +4,7 @@ from .formularios.forms import PortForm
 import socket
 import re
 import asyncio
+from django.conf import settings
 
 def telnet(request):
     # Variables de la aplicación
@@ -47,6 +48,25 @@ def telnet(request):
 
 
 
+
+
+    # Contador de visitas 
+    total_visits = 0
+    # Lee el contador directamente del archivo
+    with settings.VISIT_COUNTER_LOCK: # Usa el mismo bloqueo para leer el archivo
+        try:
+            with open(settings.VISIT_COUNTER_FILE_TELNET, 'r') as f:
+                total_visits_str = f.read().strip()
+                try:
+                    total_visits = int(total_visits_str)
+                except ValueError:
+                    total_visits = 0 # Si el archivo está corrupto
+        except FileNotFoundError:
+            total_visits = 0 # Si el archivo aún no existe (aunque el middleware lo crea)
+        except IOError as e:
+            print(f"Error al leer el archivo del contador en la vista: {e}")
+
+
     
 
 
@@ -56,6 +76,7 @@ def telnet(request):
     # Dict con datos para pasar a la Template
     datos = {
         "respuesta": respuesta,
+        'total_visits': total_visits,
         "formulario": form,
         "ipInput": ipInput,
         "portInput": portInput,

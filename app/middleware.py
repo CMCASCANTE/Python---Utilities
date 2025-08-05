@@ -20,6 +20,41 @@ class FileVisitCounterMiddleware:
                 except IOError as e:
                     print(f"Error al crear o inicializar el archivo del contador: {e}")
 
+
+
+
+        # Versión para un archivo contador en cada apartado de la APP
+        if not os.path.exists(settings.VISIT_COUNTER_FILE_DNS):
+            with _visit_counter_lock: # Bloquea para la inicialización inicial
+                try:
+                    with open(settings.VISIT_COUNTER_FILE_DNS, 'w') as f:
+                        f.write('0')
+                except IOError as e:
+                    print(f"Error al crear o inicializar el archivo del contador: {e}")
+
+        if not os.path.exists(settings.VISIT_COUNTER_FILE_TELNET):
+            with _visit_counter_lock: # Bloquea para la inicialización inicial
+                try:
+                    with open(settings.VISIT_COUNTER_FILE_TELNET, 'w') as f:
+                        f.write('0')
+                except IOError as e:
+                    print(f"Error al crear o inicializar el archivo del contador: {e}")
+
+        if not os.path.exists(settings.VISIT_COUNTER_FILE_BKL):
+            with _visit_counter_lock: # Bloquea para la inicialización inicial
+                try:
+                    with open(settings.VISIT_COUNTER_FILE_BKL, 'w') as f:
+                        f.write('0')
+                except IOError as e:
+                    print(f"Error al crear o inicializar el archivo del contador: {e}")
+        
+
+
+
+
+
+
+
     def __call__(self, request):
         # Este código se ejecuta en cada request antes de que la vista sea llamada.
 
@@ -44,6 +79,58 @@ class FileVisitCounterMiddleware:
 
                     with open(settings.VISIT_COUNTER_FILE, 'w') as f:
                         f.write(str(new_count))
+
+
+
+
+                # Versión para un archivo contador en cada apartado de la APP
+                if request.path.startswith('/dns'):                    
+                    with _visit_counter_lock:
+                        with open(settings.VISIT_COUNTER_FILE_DNS, 'r') as f:
+                            current_count_str = f.read().strip()
+                            try:
+                                current_count = int(current_count_str)
+                            except ValueError:
+                                # Si el archivo está corrupto o vacío, reinicia a 0
+                                current_count = 0
+                        
+                        new_count = current_count + 1
+
+                        with open(settings.VISIT_COUNTER_FILE_DNS, 'w') as f:
+                            f.write(str(new_count))
+
+                if request.path.startswith('/telnet'):
+                    with _visit_counter_lock:
+                        with open(settings.VISIT_COUNTER_FILE_TELNET, 'r') as f:
+                            current_count_str = f.read().strip()
+                            try:
+                                current_count = int(current_count_str)
+                            except ValueError:
+                                # Si el archivo está corrupto o vacío, reinicia a 0
+                                current_count = 0
+                        
+                        new_count = current_count + 1
+
+                        with open(settings.VISIT_COUNTER_FILE_TELNET, 'w') as f:
+                            f.write(str(new_count))
+
+                if request.path.startswith('/bkl'):
+                    with _visit_counter_lock:
+                        with open(settings.VISIT_COUNTER_FILE_BKL, 'r') as f:
+                            current_count_str = f.read().strip()
+                            try:
+                                current_count = int(current_count_str)
+                            except ValueError:
+                                # Si el archivo está corrupto o vacío, reinicia a 0
+                                current_count = 0
+                        
+                        new_count = current_count + 1
+
+                        with open(settings.VISIT_COUNTER_FILE_BKL, 'w') as f:
+                            f.write(str(new_count))
+
+
+
                         
             except IOError as e:
                 print(f"Error al leer o escribir en el archivo del contador: {e}")

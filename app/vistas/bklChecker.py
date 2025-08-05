@@ -6,7 +6,7 @@ from .formularios.forms import BKLForm
 import re
 from pydnsbl import DNSBLIpChecker, DNSBLDomainChecker, providers
 from pydnsbl.providers import BASE_PROVIDERS, Provider
-
+from django.conf import settings
 
 
 # Lista de providers custom
@@ -103,9 +103,41 @@ def bklChecker(request):
             validValue = False
 
 
+
+
+
+
+    # Contador de visitas 
+    total_visits = 0
+    # Lee el contador directamente del archivo
+    with settings.VISIT_COUNTER_LOCK: # Usa el mismo bloqueo para leer el archivo
+        try:
+            with open(settings.VISIT_COUNTER_FILE_BKL, 'r') as f:
+                total_visits_str = f.read().strip()
+                try:
+                    total_visits = int(total_visits_str)
+                except ValueError:
+                    total_visits = 0 # Si el archivo está corrupto
+        except FileNotFoundError:
+            total_visits = 0 # Si el archivo aún no existe (aunque el middleware lo crea)
+        except IOError as e:
+            print(f"Error al leer el archivo del contador en la vista: {e}")
+
+    
+
+
+
+
+
+
+
+
+
+
 # Tupla de datos que vamos a pasar a la Template HTML
     context = {        
         "formulario": form,
+        'total_visits': total_visits,
         "valueInput": valueInput,        
         "validValue": validValue,
         "resultadoBool": resultBool,         

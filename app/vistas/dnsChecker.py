@@ -6,6 +6,7 @@ from django.views.decorators.csrf import csrf_protect
 from django.shortcuts import render
 from .formularios.forms import DNSForm
 import re
+from django.conf import settings
 
 # Create your views here.
 @csrf_protect
@@ -71,12 +72,35 @@ def dnsChecker(request):
                 error = err
             
       
+
+
+
+
+    # Contador de visitas 
+        total_visits = 0
+    # Lee el contador directamente del archivo
+    with settings.VISIT_COUNTER_LOCK: # Usa el mismo bloqueo para leer el archivo
+        
+        try:
+            with open(settings.VISIT_COUNTER_FILE_DNS, 'r') as f:
+                total_visits_str = f.read().strip()
+                try:
+                    total_visits = int(total_visits_str)
+                except ValueError:
+                    total_visits = 0 # Si el archivo está corrupto
+        except FileNotFoundError:
+            total_visits = 0 # Si el archivo aún no existe (aunque el middleware lo crea)
+        except IOError as e:
+            print(f"Error al leer el archivo del contador en la vista: {e}")
+
+        
       
       
                         
     # Tupla de datos que vamos a pasar a la Template HTML
     context = {
         "consulta": query,
+        'total_visits': total_visits,
         "formulario": form,
         "valueInput": valueInput,
         "selectValue": valueSelect,
