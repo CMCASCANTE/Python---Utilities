@@ -39,10 +39,12 @@ VISIT_COUNTER_FILE_TELNET = os.path.join(BASE_DIR, 'visit_count_telnet.txt')
 VISIT_COUNTER_FILE_BKL = os.path.join(BASE_DIR, 'visit_count_bkl.txt')
 VISIT_COUNTER_LOCK = threading.Lock()
 
+# Variables para guardar las búsquedas de DNS
+DNS_RECORD_FILE = os.path.join(BASE_DIR, 'dns_record.txt') 
+
 
 
 # Application definition
-
 INSTALLED_APPS = [
     'app.apps.AppConfig',
     'django.contrib.admin',

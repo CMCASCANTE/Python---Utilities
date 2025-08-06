@@ -7,6 +7,7 @@ from django.shortcuts import render
 from .formularios.forms import DNSForm
 import re
 from django.conf import settings
+import os
 
 # Create your views here.
 @csrf_protect
@@ -48,8 +49,7 @@ def dnsChecker(request):
         # La guardamos en una variable
         # Y gestionando errores para que no salte la excepción y pare el programa
         try:
-            query = list(resolveDNS(valueInput, valueSelect))    
-            print(query)
+            query = list(resolveDNS(valueInput, valueSelect))                
         except Exception as err:
             # print(err, file=sys.stderr)
             error = err
@@ -76,6 +76,32 @@ def dnsChecker(request):
 
 
 
+        # Guardamos un registro de las busquedas en un fichero         
+        # Se ejecuta dentro de la condición IF que valida si hay input y es válido 
+        # Asegúrate de que el archivo exista e inicializa el contador si es la primera vez
+        if not os.path.exists(settings.DNS_RECORD_FILE):        
+            try:
+                with open(settings.DNS_RECORD_FILE, 'w') as f:
+                    f.write('lawebdekarlos.es\n')
+            except IOError as e:
+                print(f"Error al crear o inicializar el archivo del contador: {e}")       
+        # Acceso al archivo para añadir la busqieda actual 
+        with open(settings.DNS_RECORD_FILE, 'a') as f:
+            f.write(str(valueInput)+ '\n')
+
+
+
+
+        
+        
+        
+        
+
+
+
+
+
+
     # Contador de visitas 
         total_visits = 0
     # Lee el contador directamente del archivo
@@ -95,6 +121,16 @@ def dnsChecker(request):
 
         
       
+
+
+
+
+
+
+
+
+
+
       
                         
     # Tupla de datos que vamos a pasar a la Template HTML
