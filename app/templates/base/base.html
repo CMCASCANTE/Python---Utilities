@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Utilities Web</title>
+    <link rel="stylesheet" href="static/CSS/general.css">
+</head>
+<body>   
+    <div class="contenedor">
+        {% block headTitle %} {% endblock %}
+        <nav>
+            <a href="/">Home</a> |
+            <a href="/dns">Buscador DNS</a> |
+            <a href="/telnet">Tester de Puertos</a> |
+            <a href="/bkl">Listas negras</a>        
+        </nav>
+        
+        {% block content %} {% endblock %}
+
+        <!-- <p>
+            <p style="position: absolute; bottom: 2em; right: 2em;color: rgba(0, 0, 0, 0);">Esta página ha sido visitada <strong>{{ total_visits }}</strong> veces.</p>
+        </p> -->
+        <footer class="footer-container">
+            <p>&copy; 2025 Carlos Martinez. Todos los derechos reservados.</p>
+            <p>Contacto: <a href="mailto:comentarios@lawebdekarlos.es">comentarios@lawebdekarlos.es</a></p>
+        </footer>
+    </div>
+
+
+    <noscript>
+        <style>
+            /* Oculta el contenido principal si JS está desactivado */
+            .contenedor {
+                display: none;
+            }
+        </style>
+        <div style="text-align: center; margin-top: 50px;">
+            <h2>⚠️ JavaScript está desactivado.</h2>
+            <p>Por favor, habilita JavaScript para ver esta página correctamente.</p>
+        </div>
+    </noscript>
+    <script type="text/javascript">
+        botonBuscar = document.querySelectorAll('[type="submit"]')[0].getElementsByTagName('div')[0];        
+        requestDone = true
+        function deshabilitarBuscar() {                        
+            if (!requestDone) {
+                event.preventDefault()
+            } else {
+                botonBuscar.innerHTML = "Buscando..."
+                botonBuscar.classList.add("loading")
+                requestDone = false
+            }
+        }            
+    </script>
+
+
+</body>
+</html>

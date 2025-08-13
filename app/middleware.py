@@ -155,6 +155,7 @@ class PermisoMiddleware:
             '/telnet',
             '/bkl',
             '/static/CSS/general.css',
+            '/favicon.ico'
         ]
 
     def __call__(self, request):

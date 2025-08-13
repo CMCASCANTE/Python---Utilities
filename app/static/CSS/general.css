@@ -32,6 +32,19 @@ nav a:hover {
     color: rgba(18, 65, 139, 0.87);
 }
 
+
+
+/* Div de bienvenida en index*/
+.bienvenida{
+    font-family: Arial, sans-serif;     
+    max-width: 600px; 
+    margin: 50px auto; 
+    padding: 20px; 
+    text-align: center;
+} 
+
+
+
 /*FORMULARIO*/
 form {
     background-color: rgba(59,130,246,0.5);
@@ -153,6 +166,7 @@ form button {
 .principal{
     flex-grow: 1; /* Esto es clave: el main "crece" para ocupar el espacio disponible */
 } 
+
 
 
 

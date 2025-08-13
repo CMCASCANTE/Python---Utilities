@@ -7,6 +7,7 @@ import re
 from pydnsbl import DNSBLIpChecker, DNSBLDomainChecker, providers
 from pydnsbl.providers import BASE_PROVIDERS, Provider
 from django.conf import settings
+import asyncio
 
 
 # Lista de providers custom
@@ -79,7 +80,7 @@ def bklChecker(request):
 
     # Validar datos de input        
     if valueInput:        
-        # Creación del pattern para comprobar si se introduce una IP o un Dominio 
+        # Creación del pattern para comprobar si se introduce una IP o un Dominio /// Actualmente solo se permiten IPs
         inputValidatePattern = re.compile(
             r"^(?P<ip>\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})$|"
             r"^(?P<domain>(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?\.)+[a-zA-Z]{2,6})$"
@@ -91,8 +92,7 @@ def bklChecker(request):
         if match:            
             # Si coincide con el patron de IP 
             if match.group('ip'):
-                resultBool, result = checkIP(valueInput)
-                print(result.providers)
+                resultBool, result = checkIP(valueInput)                
             # Si coincide con el patron de Dominio
             # elif match.group('domain'):
                 # resultBool, result = checkDomain(valueInput)
@@ -141,7 +141,7 @@ def bklChecker(request):
         "valueInput": valueInput,        
         "validValue": validValue,
         "resultadoBool": resultBool,         
-        "isListed": result.blacklisted if validValue and valueInput else None,
+        "isListed": result.blacklisted if validValue and valueInput and resultBool else None,
         "resultado": result if validValue and valueInput else None     
     }
     # Lanzamiento y paso de datos a la Template HTML
@@ -166,31 +166,26 @@ def bklChecker(request):
 
 
 
-# Funcion para consultar las listas negras de un dominio 
-def checkDomain(dominio):
-    # Creamos el objeto de pydnsbl que va a realizar la consulta    
-    checker = DNSBLDomainChecker(providers=providers)
-    
-    # Lanzamos la consulta con manejo de excepciones 
-    try:
-        result = checker.check(dominio)
-        print(result)
-        return True, result
-        
-    except Exception as e:
-         return False, f"Ha ocurrido un error: {e}"
 
 
 # Funcion para consultar las listas negras de una IP
 def checkIP(ip):
-    # Creamos el objeto de pydnsbl que va a realizar la consulta
-    checker = DNSBLIpChecker(providers=providers)
-    
+
+    # Creamos un loop antes del checker (para que no de errores de loop mas adepante, que mydnsbkl suele darlos)
+    try:
+        loop = asyncio.get_event_loop()
+    except RuntimeError:
+        loop = asyncio.new_event_loop()
+        asyncio.set_event_loop(loop)
+
+    checker = DNSBLIpChecker(providers=providers)    
+
     # Lanzamos la consulta con manejo de excepciones
     try:
         result = checker.check(ip)
         return True, result
     except Exception as e:
+         print(e)
          return False, f"Ha ocurrido un error {e}"
 
 
